@@ -2,13 +2,29 @@
 const canvas = document.createElement("canvas");
 const context = canvas.getContext("2d");
 
-// Sets the circles size and color.
+// Sets the circles' size and color.
 const circleSize = 50;
 const circleColor = "#00FFFF";
 
-// Set the canvas dimensions and adds it to the body.
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+// Resizes the canvas to the viewport dimensions.
+function resizeCanvas() {
+  // Sets the canvas dimensions to the viewport size.
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+// Resizes the canvas initially and adds event listeners to resize it later.
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+window.addEventListener("orientationchange", resizeCanvas);
+
+// Set canvas position to fixed and z-index to a high value.
+canvas.style.position = "fixed";
+canvas.style.zIndex = "9999";
+canvas.style.top = "0";
+canvas.style.left = "0";
+
+// Adds the canvas to the body.
 document.body.appendChild(canvas);
 
 // Creates an empty array for the circles.
@@ -62,13 +78,3 @@ setInterval(() => {
   updateCircles();
   drawCircles();
 }, 10);
-
-// Adds a resize event listener to the window object.
-window.addEventListener("resize", () => {
-  // Updates the canvas dimensions.
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  // Redraws the circles.
-  drawCircles();
-});
